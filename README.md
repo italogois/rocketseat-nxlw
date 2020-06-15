@@ -11,8 +11,8 @@ Project developed at Rocketseat Next Level Week.
 
 ## How to contribute
 
-- Fork that repository
-- Create a new branch: `git checkout -b my-branch`;
-- Commit your code: `git commit -m 'feat: This is my contribution'`;
-- Push your branch: `git push origin my-branch`.
-- Open the pull request
+1. Fork that repository
+2. Create a new branch: `git checkout -b my-branch`;
+3. Commit your code: `git commit -m 'feat: This is my contribution'`;
+4. Push your branch: `git push origin my-branch`.
+5. Open the pull request
