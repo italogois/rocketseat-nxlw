@@ -1,9 +1,10 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import CreatePoint from "./pages/CreatePoint";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-const MainRoute = () => {
+import CreatePoint from './pages/CreatePoint';
+import Home from './pages/Home';
+
+const MainRoute: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />

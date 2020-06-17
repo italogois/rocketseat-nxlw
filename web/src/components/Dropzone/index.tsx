@@ -1,18 +1,18 @@
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { FiUpload } from "react-icons/fi";
+import './styles.css';
 
-import "./styles.css";
+import React, { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { FiUpload } from 'react-icons/fi';
 
 interface FileUploaded {
   onFileUploaded: (file: File) => void;
 }
 
 const Dropzone: React.FC<FileUploaded> = ({ onFileUploaded }) => {
-  const [fileUrl, setFileUrl] = useState("");
+  const [fileUrl, setFileUrl] = useState('');
 
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    acceptedFiles => {
       const file = acceptedFiles[0];
 
       const fileUrl = URL.createObjectURL(file);
@@ -20,11 +20,11 @@ const Dropzone: React.FC<FileUploaded> = ({ onFileUploaded }) => {
       setFileUrl(fileUrl);
       onFileUploaded(file);
     },
-    [onFileUploaded]
+    [onFileUploaded],
   );
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: "image/*",
+    accept: 'image/*',
   });
 
   return (

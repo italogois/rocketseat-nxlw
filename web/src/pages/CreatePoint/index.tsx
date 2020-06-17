@@ -1,13 +1,15 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./styles.css";
-import logo from "../../assets/logo.svg";
-import { FiArrowLeft } from "react-icons/fi";
-import api from "../../services/api";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import axios from "axios";
-import { LeafletMouseEvent } from "leaflet";
-import Dropzone from "../../components/Dropzone";
+import './styles.css';
+
+import axios from 'axios';
+import { LeafletMouseEvent } from 'leaflet';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { FiArrowLeft } from 'react-icons/fi';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Link, useNavigate } from 'react-router-dom';
+
+import logo from '../../assets/logo.svg';
+import Dropzone from '../../components/Dropzone';
+import api from '../../services/api';
 
 interface Material {
   readonly id: number;
@@ -19,7 +21,6 @@ interface Uf {
   readonly id: string;
   readonly sigla: string;
   readonly nome: string;
-  readonly regiao: any;
 }
 
 interface City {
@@ -27,17 +28,17 @@ interface City {
   readonly nome: string;
 }
 
-const CreatePoint = () => {
+const CreatePoint: React.FC = () => {
   const [fileUrl, setFileUrl] = useState<File>();
 
   const [materials, setMaterials] = useState<Material[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<number[]>([]);
 
   const [ufs, setUfs] = useState<Uf[]>([]);
-  const [selectedUf, setselectedUf] = useState("0");
+  const [selectedUf, setselectedUf] = useState('0');
 
   const [cities, setCities] = useState<City[]>([]);
-  const [selectedCity, setselectedCity] = useState("0");
+  const [selectedCity, setselectedCity] = useState('0');
 
   const [selectedPosition, setselectedPosition] = useState<[number, number]>([
     0,
@@ -45,38 +46,38 @@ const CreatePoint = () => {
   ]);
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    whatsapp: "",
+    name: '',
+    email: '',
+    whatsapp: '',
   });
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get("materials").then(({ data }) => {
+    api.get('materials').then(({ data }) => {
       setMaterials(data);
     });
   }, []);
 
   useEffect(() => {
     axios
-      .get<Uf[]>("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+      .get<Uf[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
       .then(({ data }) => {
-        const states = data.map((uf) => uf);
+        const states = data.map(uf => uf);
 
         setUfs(states);
       });
   }, []);
 
   useEffect(() => {
-    if (selectedUf === "0") return;
+    if (selectedUf === '0') return;
 
     axios
       .get<City[]>(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`
+        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`,
       )
       .then(({ data }) => {
-        const cities = data.map((city) => city);
+        const cities = data.map(city => city);
 
         setCities(cities);
       });
@@ -102,12 +103,12 @@ const CreatePoint = () => {
 
   function handleSelectMaterial(id: number) {
     const alreadySelected = selectedMaterials.findIndex(
-      (material) => material === id
+      material => material === id,
     );
 
     if (alreadySelected >= 0) {
       const fieltredItems = selectedMaterials.filter(
-        (material) => material !== id
+        material => material !== id,
       );
 
       setSelectedMaterials(fieltredItems);
@@ -127,19 +128,19 @@ const CreatePoint = () => {
 
     const data = new FormData();
 
-    data.append("name", name);
-    data.append("email", email);
-    data.append("whatsapp", whatsapp);
-    data.append("latitude", String(latitude));
-    data.append("longitude", String(longitude));
-    data.append("cidade", cidade);
-    data.append("uf", uf);
-    data.append("materials", materials.join(", "));
-    if (fileUrl) data.append("image", fileUrl);
+    data.append('name', name);
+    data.append('email', email);
+    data.append('whatsapp', whatsapp);
+    data.append('latitude', String(latitude));
+    data.append('longitude', String(longitude));
+    data.append('cidade', cidade);
+    data.append('uf', uf);
+    data.append('materials', materials.join(', '));
+    if (fileUrl) data.append('image', fileUrl);
 
-    await api.post("collection_points", data);
+    await api.post('collection_points', data);
 
-    navigate("/");
+    navigate('/');
   }
 
   return (
@@ -249,10 +250,10 @@ const CreatePoint = () => {
           </legend>
 
           <ul className="items-grid">
-            {materials.map((material) => (
+            {materials.map(material => (
               <li
                 className={
-                  selectedMaterials.includes(material.id) ? "selected" : ""
+                  selectedMaterials.includes(material.id) ? 'selected' : ''
                 }
                 key={material.id}
                 onClick={() => handleSelectMaterial(material.id)}
