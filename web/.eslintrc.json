@@ -21,6 +21,7 @@
   },
   "plugins": ["react", "@typescript-eslint", "simple-import-sort"],
   "rules": {
-    "simple-import-sort/sort": "error"
+    "simple-import-sort/sort": "error",
+    "react/prop-types": 0
   }
 }
